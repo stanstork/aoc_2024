@@ -27,16 +27,9 @@ impl AocDay1 {
         let right_map = Self::get_map(&self.right);
         let mut score = 0;
 
-        for (i, l) in self.left.iter().enumerate() {
+        for l in self.left.iter() {
             let times = *right_map.get(&l).unwrap_or(&0);
             score += l * times;
-
-            if i < self.left.len() - 1 {
-                let next = self.left[i + 1];
-                while next == *l {
-                    score += l * times;
-                }
-            }
         }
 
         score
