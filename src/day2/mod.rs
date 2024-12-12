@@ -17,14 +17,14 @@ impl AocDay2 {
         AocDay2 { reports }
     }
 
-    pub fn day1(&self) -> i32 {
+    pub fn part1(&self) -> i32 {
         self.reports
             .iter()
             .filter(|report| Self::is_safe_report(&report))
             .count() as i32
     }
 
-    pub fn day2(&self) -> i32 {
+    pub fn part2(&self) -> i32 {
         self.reports
             .iter()
             .filter(|report| {
