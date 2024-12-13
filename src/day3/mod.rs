@@ -26,7 +26,7 @@ impl AocDay3 {
             let chars = line.chars().collect::<Vec<_>>();
             acc + chars.iter().enumerate().fold(0, |acc, (i, c)| {
                 if *c == 'm' {
-                     acc + Self::eval_mul(&chars, i)
+                    acc + Self::eval_mul(&chars, i)
                 } else {
                     acc
                 }
@@ -64,7 +64,10 @@ impl AocDay3 {
     }
 
     fn matches_pattern(chars: &[char], start: usize, pattern: &[char]) -> bool {
-        pattern.iter().enumerate().all(|(i, c)| chars.get(start + i) == Some(c))
+        pattern
+            .iter()
+            .enumerate()
+            .all(|(i, c)| chars.get(start + i) == Some(c))
     }
 
     fn get_params(chars: &[char], start: usize) -> Option<(i32, i32)> {
@@ -98,5 +101,5 @@ impl AocDay3 {
         } else {
             None
         }
-    }   
+    }
 }
