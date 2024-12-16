@@ -12,3 +12,10 @@ pub fn read_lines(file_path: &str) -> Vec<String> {
     }
     lines
 }
+
+pub fn read_matrix(file_path: &str) -> Vec<Vec<char>> {
+    read_lines(file_path)
+        .iter()
+        .map(|line| line.chars().collect())
+        .collect()
+}
