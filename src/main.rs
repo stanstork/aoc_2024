@@ -7,11 +7,12 @@ pub mod day6;
 pub mod day7;
 pub mod day8;
 pub mod day9;
+pub mod day10;
 
 pub mod utils;
 
 fn main() {
-    let day9 = day9::AocDay9::new(utils::read_lines("data/day9.txt"));
-    println!("Day 9, Part 1: {}", day9.part1());
-    println!("Day 9, Part 2: {}", day9.part2());
+    let day10 = day10::AocDay10::new();
+    println!("Day 10, Part 1: {}", day10.part1());
+    println!("Day 10, Part 2: {}", day10.part2());
 }

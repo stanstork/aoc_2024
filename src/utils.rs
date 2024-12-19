@@ -19,3 +19,14 @@ pub fn read_matrix(file_path: &str) -> Vec<Vec<char>> {
         .map(|line| line.chars().collect())
         .collect()
 }
+
+pub fn read_num_matrix(file_path: &str) -> Vec<Vec<i32>> {
+    read_lines(file_path)
+        .iter()
+        .map(|line| {
+            line.chars()
+                .map(|c| c.to_digit(10).unwrap() as i32)
+                .collect()
+        })
+        .collect()
+}
