@@ -30,3 +30,7 @@ pub fn read_num_matrix(file_path: &str) -> Vec<Vec<i32>> {
         })
         .collect()
 }
+
+pub fn in_bounds<T>(matrix: &Vec<Vec<T>>, r: isize, c: isize) -> bool {
+    r >= 0 && (r as usize) < matrix.len() && c >= 0 && (c as usize) < matrix[0].len()
+}
