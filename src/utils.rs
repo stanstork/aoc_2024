@@ -34,3 +34,22 @@ pub fn read_num_matrix(file_path: &str) -> Vec<Vec<i32>> {
 pub fn in_bounds<T>(matrix: &Vec<Vec<T>>, r: isize, c: isize) -> bool {
     r >= 0 && (r as usize) < matrix.len() && c >= 0 && (c as usize) < matrix[0].len()
 }
+
+pub fn split_lines_whitespace(file_path: &str) -> (Vec<String>, Vec<String>) {
+    let lines = read_lines(file_path);
+    let mut first = Vec::new();
+    let mut second = Vec::new();
+    let mut first_done = false;
+    for line in lines {
+        if line.is_empty() {
+            first_done = true;
+            continue;
+        }
+        if !first_done {
+            first.push(line);
+        } else {
+            second.push(line);
+        }
+    }
+    (first, second)
+}
