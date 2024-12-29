@@ -1,5 +1,5 @@
-use crate::utils::read_matrix;
-use std::collections::{BinaryHeap, HashMap, HashSet};
+use crate::utils::{in_bounds, read_matrix};
+use std::collections::{HashMap, HashSet, VecDeque};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Direction {
@@ -10,22 +10,13 @@ enum Direction {
 }
 
 impl Direction {
-    fn opposite(&self) -> Direction {
-        match self {
-            Direction::Up => Direction::Down,
-            Direction::Down => Direction::Up,
-            Direction::Left => Direction::Right,
-            Direction::Right => Direction::Left,
-        }
-    }
-
-    fn offset(&self) -> (isize, isize) {
-        match self {
-            Direction::Up => (-1, 0),
-            Direction::Down => (1, 0),
-            Direction::Left => (0, -1),
-            Direction::Right => (0, 1),
-        }
+    fn offsets() -> [(Direction, isize, isize); 4] {
+        [
+            (Direction::Up, -1, 0),
+            (Direction::Down, 1, 0),
+            (Direction::Left, 0, -1),
+            (Direction::Right, 0, 1),
+        ]
     }
 }
 
@@ -48,99 +39,89 @@ impl AocDay16 {
 
     pub fn part1(&self) -> isize {
         let (start, end) = Self::find_start_end(&self.matrix);
-        let visited = Self::dijkstra(&self.matrix, (end.0 as isize, end.1 as isize));
-
-        visited[&((start.0 as isize, start.1 as isize), Direction::Right)]
+        let (_, visited) = Self::find_paths(&self.matrix, start);
+        Self::get_min_price(&visited, end)
     }
 
     pub fn part2(&self) -> usize {
-        let mut matrix = self.matrix.clone();
+        let matrix = self.matrix.clone();
         let (start, end) = Self::find_start_end(&matrix);
-        let visited = Self::dijkstra(&matrix, (end.0 as isize, end.1 as isize));
+        let (paths, visited) = Self::find_paths(&matrix, start);
+        let min_price = Self::get_min_price(&visited, end);
 
-        Self::find_best_paths(&mut matrix, (start.0, start.1), visited)
+        let mut unique_positions = HashSet::new();
+        for path in paths.iter() {
+            if path.0 == min_price {
+                for (row, col, _) in path.1.iter() {
+                    unique_positions.insert((row, col));
+                }
+            }
+        }
+
+        unique_positions.len()
     }
 
-    fn dijkstra(
-        matrix: &Vec<Vec<char>>,
+    fn get_min_price(
+        visited: &HashMap<(isize, isize, Direction), isize>,
         end: (isize, isize),
-    ) -> HashMap<((isize, isize), Direction), isize> {
-        let mut visited = HashMap::new();
-        let mut queue = BinaryHeap::new();
-
-        for &dir in &Self::DIRECTIONS {
-            let pos = (end, dir);
-            queue.push((0, pos));
-            visited.insert(pos, 0);
-        }
-
-        while let Some((price, pos)) = queue.pop() {
-            for (next, next_price) in Self::make_move(matrix, pos, false) {
-                let new_price = price + next_price;
-                if new_price < *visited.get(&next).unwrap_or(&isize::MAX) {
-                    visited.insert(next, new_price);
-                    queue.push((new_price, next));
-                }
+    ) -> isize {
+        let mut min_price = isize::MAX;
+        for dir in &Self::DIRECTIONS {
+            if let Some(&cost) = visited.get(&(end.0, end.1, *dir)) {
+                min_price = min_price.min(cost);
             }
         }
-
-        visited
+        min_price
     }
 
-    fn make_move(
+    fn find_paths(
         matrix: &Vec<Vec<char>>,
-        pos: ((isize, isize), Direction),
-        forward: bool,
-    ) -> Vec<(((isize, isize), Direction), isize)> {
-        let mut results = Vec::new();
-        for &dir in &Self::DIRECTIONS {
-            let offset = dir.offset();
-            let new_pos = if forward {
-                (pos.0 .0 + offset.0, pos.0 .1 + offset.1)
-            } else {
-                (pos.0 .0 - offset.0, pos.0 .1 - offset.1)
-            };
-            if matrix[new_pos.0 as usize][new_pos.1 as usize] != '#' {
-                results.push(((new_pos, dir), if dir == pos.1 { 1 } else { 1001 }));
+        start: (isize, isize),
+    ) -> (
+        Vec<(isize, Vec<(isize, isize, Direction)>)>,
+        HashMap<(isize, isize, Direction), isize>,
+    ) {
+        let mut queue = VecDeque::new();
+        let mut visited = HashMap::new();
+        let mut paths = Vec::new();
+
+        queue.push_back((vec![(start.0, start.1, Direction::Right)], 0));
+        visited.insert((start.0, start.1, Direction::Right), 0);
+
+        while let Some((path, price)) = queue.pop_front() {
+            let (row, col, direction) = path.last().unwrap();
+
+            if !in_bounds(matrix, *row, *col) || matrix[*row as usize][*col as usize] == '#' {
+                continue;
             }
-            if dir != pos.1 && dir != pos.1.opposite() {
-                results.push(((pos.0, dir), 1000));
+
+            if matrix[*row as usize][*col as usize] == 'E' {
+                paths.push((price, path.clone()));
+                continue;
             }
-        }
-        results
-    }
 
-    fn find_best_paths(
-        matrix: &mut Vec<Vec<char>>,
-        start: (usize, usize),
-        visited: HashMap<((isize, isize), Direction), isize>,
-    ) -> usize {
-        let start = ((start.0 as isize, start.1 as isize), Direction::Right);
-        let mut queue = BinaryHeap::new();
+            for &(next_dir, row_offset, col_offset) in &Direction::offsets() {
+                let new_row = row + row_offset;
+                let new_col = col + col_offset;
+                let new_price = price + if next_dir == *direction { 1 } else { 1001 };
 
-        queue.push((visited[&start], start));
+                if visited
+                    .get(&(new_row, new_col, next_dir))
+                    .map_or(true, |&existing_price| new_price <= existing_price)
+                {
+                    let mut new_path = path.clone();
+                    new_path.push((new_row, new_col, next_dir));
 
-        let mut paths = HashSet::new();
-        paths.insert(start);
-
-        while let Some((remaining, pos)) = queue.pop() {
-            for (next, price) in Self::make_move(matrix, pos, true) {
-                let next_remaining = remaining - price;
-                if !paths.contains(&next) && visited[&next] == next_remaining {
-                    paths.insert(next);
-                    queue.push((next_remaining, next));
+                    queue.push_back((new_path, new_price));
+                    visited.insert((new_row, new_col, next_dir), new_price);
                 }
             }
         }
 
-        for (pos, _) in paths.iter() {
-            matrix[pos.0 as usize][pos.1 as usize] = 'O';
-        }
-
-        matrix.iter().flatten().filter(|&&c| c == 'O').count()
+        (paths, visited)
     }
 
-    fn find_start_end(matrix: &Vec<Vec<char>>) -> ((usize, usize), (usize, usize)) {
+    fn find_start_end(matrix: &Vec<Vec<char>>) -> ((isize, isize), (isize, isize)) {
         let mut start = (0, 0);
         let mut end = (0, 0);
 
@@ -154,6 +135,9 @@ impl AocDay16 {
             }
         }
 
-        (start, end)
+        (
+            (start.0 as isize, start.1 as isize),
+            (end.0 as isize, end.1 as isize),
+        )
     }
 }
