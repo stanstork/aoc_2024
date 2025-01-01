@@ -58,16 +58,16 @@ impl Computer {
     fn run(&mut self) {
         while self.pc < self.instructions.len() {
             let opcode = OpCode::from(self.instructions[self.pc]);
-            let operand = self.get_operand_value(self.instructions[self.pc + 1], opcode);
+            let operand = self.instructions[self.pc + 1];
             match opcode {
                 OpCode::Adv | OpCode::Bdv | OpCode::Cdv => {
-                    self.division(opcode, operand);
+                    self.division(opcode, self.combo_operand(operand));
                 }
                 OpCode::Bxl => {
                     self.registers[1].value ^= operand;
                 }
                 OpCode::Bst | OpCode::Out => {
-                    let result = operand % 8;
+                    let result = self.combo_operand(operand) % 8;
                     if opcode == OpCode::Bst {
                         self.registers[1].value = result;
                     } else {
@@ -88,16 +88,11 @@ impl Computer {
         }
     }
 
-    fn get_operand_value(&self, operand: isize, opcode: OpCode) -> isize {
-        match opcode {
-            OpCode::Adv | OpCode::Bdv | OpCode::Cdv | OpCode::Out => match operand {
-                0..=3 => operand,
-                4 => self.registers[0].value,
-                5 => self.registers[1].value,
-                6 => self.registers[2].value,
-                _ => panic!("Invalid combo operand"),
-            },
-            _ => operand,
+    fn combo_operand(&self, operand: isize) -> isize {
+        match operand {
+            0..=3 => operand,
+            4..=7 => self.registers[(operand - 4) as usize].value,
+            _ => unreachable!(),
         }
     }
 
