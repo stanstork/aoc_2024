@@ -113,18 +113,111 @@ impl Computer {
             .collect::<Vec<String>>()
             .join(",")
     }
+
+    fn reset(&mut self) {
+        self.registers[0].value = 0;
+        self.registers[1].value = 0;
+        self.registers[2].value = 0;
+        self.out.clear();
+        self.pc = 0;
+    }
+
+    fn set_registers(&mut self, a: isize, b: isize, c: isize) {
+        self.registers[0].value = a;
+        self.registers[1].value = b;
+        self.registers[2].value = c;
+    }
 }
 
-pub fn part1() {
-    let (instructions, a, b, c) = parse_program();
+pub struct AocDay17 {
+    instructions: Vec<isize>,
+    a: isize,
+    b: isize,
+    c: isize,
+}
 
-    println!("Instructions: {:?}", instructions);
-    println!("Registers: {}, {}, {}", a, b, c);
+impl AocDay17 {
+    pub fn new() -> Self {
+        let (instructions, a, b, c) = parse_program();
+        AocDay17 {
+            instructions,
+            a,
+            b,
+            c,
+        }
+    }
 
-    let mut computer = Computer::new(a, b, c, instructions);
-    computer.run();
+    pub fn part1(&self) -> String {
+        let mut computer = Computer::new(self.a, self.b, self.c, self.instructions.clone());
+        computer.run();
+        computer.output()
+    }
 
-    println!("Output: {}", computer.output());
+    pub fn part2(&self) -> isize {
+        let expected_out = self
+            .instructions
+            .iter()
+            .map(ToString::to_string)
+            .collect::<Vec<String>>()
+            .join(",");
+
+        let mut combinations = vec![0];
+        let mut computer = Computer::new(0, self.b, self.c, self.instructions.clone());
+
+        for _ in 0..self.instructions.len() {
+            combinations = Self::filter_combinations(
+                &combinations,
+                &expected_out,
+                &mut computer,
+                self.b,
+                self.c,
+            );
+        }
+
+        *combinations.iter().min().unwrap()
+    }
+
+    fn filter_combinations(
+        combinations: &Vec<isize>,
+        expected_out: &str,
+        computer: &mut Computer,
+        b: isize,
+        c: isize,
+    ) -> Vec<isize> {
+        let mut new_combinations = Vec::new();
+
+        for &ah in combinations {
+            for al in 0..8 {
+                let a = ah * 8 + al;
+                computer.reset();
+                computer.set_registers(a, b, c);
+                computer.run();
+
+                if Self::is_valid_output(&computer.output(), expected_out) {
+                    new_combinations.push(a);
+                }
+            }
+        }
+
+        new_combinations
+    }
+
+    fn is_valid_output(output: &str, instruction_str: &str) -> bool {
+        let mut inst_idx = instruction_str.len() - 1;
+
+        for ch in output.chars().rev() {
+            if let Some(expected) = instruction_str.chars().nth(inst_idx) {
+                if ch != expected {
+                    return false;
+                }
+                inst_idx -= 1;
+            } else {
+                return false;
+            }
+        }
+
+        true
+    }
 }
 
 fn parse_program() -> (Vec<isize>, isize, isize, isize) {
