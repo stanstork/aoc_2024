@@ -35,6 +35,10 @@ pub fn in_bounds<T>(matrix: &Vec<Vec<T>>, r: isize, c: isize) -> bool {
     r >= 0 && (r as usize) < matrix.len() && c >= 0 && (c as usize) < matrix[0].len()
 }
 
+pub fn on_edge<T>(matrix: &Vec<Vec<T>>, row: isize, col: isize) -> bool {
+    row == 0 || row == matrix.len() as isize - 1 || col == 0 || col == matrix[0].len() as isize - 1
+}
+
 pub fn split_lines_whitespace(file_path: &str) -> (Vec<String>, Vec<String>) {
     let lines = read_lines(file_path);
     let mut first = Vec::new();
