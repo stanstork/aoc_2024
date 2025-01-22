@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader, BufWriter, Write},
+    io::{BufRead, BufReader},
 };
 
 pub fn read_lines(file_path: &str) -> Vec<String> {

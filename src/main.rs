@@ -24,7 +24,7 @@ pub mod day22;
 pub mod utils;
 
 fn main() {
-    let day21 = day21::AocDay21::new();
-    println!("Part 1: {}", day21.part1());
-    println!("Part 2: {}", day21.part2());
+    let day22 = day22::AocDay22::new();
+    println!("Part 1: {}", day22.part1());
+    println!("Part 2: {}", day22.part2());
 }
