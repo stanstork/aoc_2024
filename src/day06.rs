@@ -36,7 +36,7 @@ pub struct AocDay6 {
 impl AocDay6 {
     pub fn new() -> Self {
         AocDay6 {
-            map: utils::read_matrix("data/day6.txt"),
+            map: utils::read_matrix("input/day6.txt"),
         }
     }
 

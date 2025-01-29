@@ -20,7 +20,7 @@ pub struct AocDay14 {
 
 impl AocDay14 {
     pub fn new() -> AocDay14 {
-        let input = read_lines("data/day14.txt");
+        let input = read_lines("input/day14.txt");
         let robots = Self::get_robots(&input);
         AocDay14 { robots }
     }

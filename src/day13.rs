@@ -18,7 +18,7 @@ pub struct AocDay13 {
 
 impl AocDay13 {
     pub fn new() -> Self {
-        let lines = read_lines("data/day13.txt");
+        let lines = read_lines("input/day13.txt");
         let mut points = Vec::new();
 
         for i in (0..lines.len()).step_by(4) {

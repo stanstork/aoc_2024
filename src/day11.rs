@@ -78,7 +78,7 @@ impl AocDay11 {
     }
 
     fn get_nums() -> Vec<i64> {
-        let input = utils::read_lines("data/day11.txt")[0].clone();
+        let input = utils::read_lines("input/day11.txt")[0].clone();
         input
             .split_whitespace()
             .map(|x| x.parse::<i64>().unwrap())

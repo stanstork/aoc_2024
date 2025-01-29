@@ -13,7 +13,7 @@ pub struct AocDay22 {
 impl AocDay22 {
     pub fn new() -> Self {
         AocDay22 {
-            nums: read_lines("data/day22.txt")
+            nums: read_lines("input/day22.txt")
                 .iter()
                 .map(|line| line.parse::<isize>().unwrap())
                 .collect(),

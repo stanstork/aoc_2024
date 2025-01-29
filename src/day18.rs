@@ -8,7 +8,7 @@ pub struct AocDay18 {
 
 impl AocDay18 {
     pub fn new() -> AocDay18 {
-        let lines = utils::read_lines("data/day18.txt");
+        let lines = utils::read_lines("input/day18.txt");
         let mut matrix = vec![vec!['.'; 71]; 71];
 
         for i in 0..1024 {

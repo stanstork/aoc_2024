@@ -33,7 +33,7 @@ impl AocDay16 {
     ];
 
     pub fn new() -> AocDay16 {
-        let matrix = read_matrix("data/day16.txt");
+        let matrix = read_matrix("input/day16.txt");
         AocDay16 { matrix }
     }
 

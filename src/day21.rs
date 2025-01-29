@@ -14,7 +14,7 @@ pub struct AocDay21 {
 
 impl AocDay21 {
     pub fn new() -> Self {
-        let lines = crate::utils::read_lines("data/day21.txt");
+        let lines = crate::utils::read_lines("input/day21.txt");
         AocDay21 {
             codes: lines,
             num_keypad: HashMap::from([

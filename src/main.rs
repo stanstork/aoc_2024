@@ -21,11 +21,12 @@ pub mod day20;
 pub mod day21;
 pub mod day22;
 pub mod day23;
+pub mod day24;
 
 pub mod utils;
 
 fn main() {
-    let day23 = day23::AocDay23::new();
-    println!("Day 23: Part 1 = {}", day23.part1());
-    println!("Day 23: Part 2 = {}", day23.part2());
+    let day24 = day24::AocDay24::new();
+    println!("Day 24: Part 1: {}", day24.part1());
+    println!("Day 24: Part 2: {}", day24.part2());
 }

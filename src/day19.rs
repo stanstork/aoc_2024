@@ -8,7 +8,7 @@ pub struct AocDay19 {
 
 impl AocDay19 {
     pub fn new() -> AocDay19 {
-        let input = split_lines_whitespace("data/day19.txt");
+        let input = split_lines_whitespace("input/day19.txt");
         let towels = input.0[0]
             .split(',')
             .map(|t| t.trim().to_string())

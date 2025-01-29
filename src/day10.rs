@@ -11,7 +11,7 @@ impl AocDay10 {
 
     pub fn new() -> Self {
         AocDay10 {
-            map: utils::read_num_matrix("data/day10.txt"),
+            map: utils::read_num_matrix("input/day10.txt"),
         }
     }
 
@@ -21,7 +21,7 @@ impl AocDay10 {
             for (c, &value) in row.iter().enumerate() {
                 if value == 0 {
                     let mut reached = HashSet::new();
-                    self.dfs( r as isize, c as isize, 0, &mut reached);
+                    self.dfs(r as isize, c as isize, 0, &mut reached);
                     total += reached.len();
                 }
             }
@@ -41,16 +41,16 @@ impl AocDay10 {
         total
     }
 
-    fn dfs(&self, r: isize, c: isize, target: i32, reached: &mut HashSet<(usize, usize)>)  {
+    fn dfs(&self, r: isize, c: isize, target: i32, reached: &mut HashSet<(usize, usize)>) {
         if !self.is_within_bounds(r, c) || self.map[r as usize][c as usize] != target {
             return;
         }
-    
+
         if self.map[r as usize][c as usize] == target && target == 9 {
             reached.insert((r as usize, c as usize));
             return;
         }
-    
+
         for (dr, dc) in Self::DIRECTIONS.iter() {
             self.dfs(r + dr, c + dc, target + 1, reached);
         }
@@ -60,16 +60,16 @@ impl AocDay10 {
         if !self.is_within_bounds(r, c) || self.map[r as usize][c as usize] != target {
             return 0;
         }
-    
+
         if target == 9 {
             return 1;
         }
-    
-        Self::DIRECTIONS.iter()
+
+        Self::DIRECTIONS
+            .iter()
             .map(|&(dr, dc)| self.count_paths(r + dr, c + dc, target + 1))
             .sum()
     }
-    
 
     fn is_within_bounds(&self, r: isize, c: isize) -> bool {
         r >= 0 && (r as usize) < self.map.len() && c >= 0 && (c as usize) < self.map[0].len()

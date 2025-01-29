@@ -440,7 +440,7 @@ fn resize_map(map: &Vec<Vec<char>>) -> Vec<Vec<char>> {
 }
 
 pub fn parse_input() -> (Vec<Vec<char>>, Vec<Direction>) {
-    let input = read_lines("data/day15.txt");
+    let input = read_lines("input/day15.txt");
     let empty_line_index = input
         .iter()
         .position(|line| line.is_empty())

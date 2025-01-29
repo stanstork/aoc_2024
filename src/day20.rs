@@ -12,7 +12,7 @@ pub struct AocDay20 {
 
 impl AocDay20 {
     pub fn new() -> AocDay20 {
-        let matrix = read_matrix("data/day20.txt");
+        let matrix = read_matrix("input/day20.txt");
         let (start, end) = Self::find_start_end(&matrix);
 
         AocDay20 { matrix, start, end }

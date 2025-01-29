@@ -10,7 +10,7 @@ impl AocDay12 {
 
     pub fn new() -> Self {
         AocDay12 {
-            plot: read_matrix("data/day12.txt"),
+            plot: read_matrix("input/day12.txt"),
         }
     }
 

@@ -221,7 +221,7 @@ impl AocDay17 {
 }
 
 fn parse_program() -> (Vec<isize>, isize, isize, isize) {
-    let input = utils::split_lines_whitespace("data/day17.txt");
+    let input = utils::split_lines_whitespace("input/day17.txt");
     let registers = parse_registers(&input.0);
     let instructions = parse_instructions(&input.1[0]);
     (instructions, registers.0, registers.1, registers.2)

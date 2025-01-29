@@ -29,7 +29,7 @@ impl AocDay23 {
     }
 
     fn build_graph() -> HashMap<String, HashSet<String>> {
-        let lines = read_lines("data/day23.txt");
+        let lines = read_lines("input/day23.txt");
         let mut graph = HashMap::new();
 
         for line in lines {
