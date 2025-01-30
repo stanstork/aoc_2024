@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::{utils, AocDay};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum OpCode {
@@ -246,4 +246,14 @@ fn parse_instructions(line: &str) -> Vec<isize> {
         .iter()
         .map(|x| x.parse::<isize>().unwrap())
         .collect::<Vec<isize>>()
+}
+
+impl AocDay for AocDay17 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
+    }
 }

@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+use crate::{utils::read_lines, AocDay};
+use std::{collections::HashMap, fmt::Display};
 
 pub struct AocDay1 {
     left: Vec<i32>,
@@ -6,10 +7,10 @@ pub struct AocDay1 {
 }
 
 impl AocDay1 {
-    pub fn new(input: Vec<String>) -> AocDay1 {
+    pub fn new() -> AocDay1 {
+        let input = read_lines("input/day1.txt");
         let (mut left, mut right) = Self::parse(&input);
 
-        // Sort the vectors to make the calculations easier
         left.sort();
         right.sort();
 
@@ -56,5 +57,15 @@ impl AocDay1 {
             map.entry(value).and_modify(|x| *x += 1).or_insert(1);
             map
         })
+    }
+}
+
+impl AocDay for AocDay1 {
+    fn part1(&self) -> Box<dyn Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn Display> {
+        Box::new(self.part2())
     }
 }

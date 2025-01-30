@@ -1,4 +1,7 @@
-use crate::utils::{self, in_bounds};
+use crate::{
+    utils::{self, in_bounds},
+    AocDay,
+};
 use std::collections::{HashSet, VecDeque};
 
 pub struct AocDay18 {
@@ -92,5 +95,15 @@ impl AocDay18 {
             .map(|x| x.parse::<usize>().unwrap())
             .collect::<Vec<usize>>();
         (pos[0], pos[1])
+    }
+}
+
+impl AocDay for AocDay18 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

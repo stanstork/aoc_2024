@@ -1,4 +1,4 @@
-use crate::utils::read_lines;
+use crate::{utils::read_lines, AocDay};
 
 #[derive(Clone, Copy)]
 struct Point {
@@ -101,5 +101,15 @@ impl AocDay13 {
         );
 
         (Point::new(ax, ay), Point::new(bx, by), Point::new(cx, cy))
+    }
+}
+
+impl AocDay for AocDay13 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

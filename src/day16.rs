@@ -1,4 +1,7 @@
-use crate::utils::{in_bounds, read_matrix};
+use crate::{
+    utils::{in_bounds, read_matrix},
+    AocDay,
+};
 use std::collections::{HashMap, HashSet, VecDeque};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -139,5 +142,15 @@ impl AocDay16 {
             (start.0 as isize, start.1 as isize),
             (end.0 as isize, end.1 as isize),
         )
+    }
+}
+
+impl AocDay for AocDay16 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

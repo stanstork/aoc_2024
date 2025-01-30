@@ -1,3 +1,5 @@
+use crate::{utils::read_lines, AocDay};
+
 #[derive(Debug, Clone)]
 enum Op {
     Add,
@@ -20,7 +22,8 @@ pub struct AocDay7 {
 }
 
 impl AocDay7 {
-    pub fn new(input: Vec<String>) -> Self {
+    pub fn new() -> Self {
+        let input = read_lines("input/day7.txt");
         let mut equations = Vec::new();
 
         for line in input {
@@ -81,5 +84,15 @@ impl AocDay7 {
             next.push(op.clone());
             Self::gen_ops(n - 1, ops, combos, next);
         }
+    }
+}
+
+impl AocDay for AocDay7 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

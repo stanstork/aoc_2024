@@ -1,3 +1,4 @@
+use crate::{utils::read_lines, AocDay};
 use std::collections::{HashMap, HashSet};
 
 trait RuleMapTrait {
@@ -42,7 +43,8 @@ pub struct AocDay5 {
 }
 
 impl AocDay5 {
-    pub fn new(input: Vec<String>) -> AocDay5 {
+    pub fn new() -> AocDay5 {
+        let input = read_lines("input/day5.txt");
         let rules = Self::get_rules(&input);
         let pages = Self::get_pages(&input);
 
@@ -150,5 +152,15 @@ impl AocDay5 {
             }
         }
         true
+    }
+}
+
+impl AocDay for AocDay5 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

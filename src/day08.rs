@@ -1,3 +1,4 @@
+use crate::{utils::read_matrix, AocDay};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
@@ -11,7 +12,8 @@ pub struct AocDay8 {
 }
 
 impl AocDay8 {
-    pub fn new(matrix: Vec<Vec<char>>) -> Self {
+    pub fn new() -> Self {
+        let matrix = read_matrix("input/day8.txt");
         let antennas = Self::get_antennas(&matrix);
         AocDay8 {
             map: matrix,
@@ -112,5 +114,15 @@ impl AocDay8 {
             }
             self.place_antidote(map, nx, ny, dx, dy);
         }
+    }
+}
+
+impl AocDay for AocDay8 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

@@ -1,3 +1,4 @@
+use crate::{utils::read_lines, AocDay};
 use std::iter::repeat;
 
 pub struct AocDay9 {
@@ -5,7 +6,8 @@ pub struct AocDay9 {
 }
 
 impl AocDay9 {
-    pub fn new(input: Vec<String>) -> AocDay9 {
+    pub fn new() -> AocDay9 {
+        let input = read_lines("input/day9.txt");
         let mut disk_map = Vec::new();
         let mut id = 0;
 
@@ -100,5 +102,15 @@ impl AocDay9 {
         }
 
         None
+    }
+}
+
+impl AocDay for AocDay9 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

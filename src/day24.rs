@@ -1,4 +1,4 @@
-use crate::utils::split_lines_whitespace;
+use crate::{utils::split_lines_whitespace, AocDay};
 use std::collections::{HashMap, HashSet, VecDeque};
 
 #[derive(Debug, Clone)]
@@ -246,5 +246,15 @@ impl AocDay24 {
         }
 
         (wires, connections)
+    }
+}
+
+impl AocDay for AocDay24 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

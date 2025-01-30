@@ -1,4 +1,7 @@
-use crate::utils::{in_bounds, read_matrix};
+use crate::{
+    utils::{in_bounds, read_matrix},
+    AocDay,
+};
 use std::collections::{HashMap, HashSet};
 
 pub struct AocDay12 {
@@ -149,5 +152,15 @@ impl AocDay12 {
         }
 
         count
+    }
+}
+
+impl AocDay for AocDay12 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

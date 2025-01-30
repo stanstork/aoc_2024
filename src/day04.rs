@@ -1,16 +1,21 @@
+use crate::{utils::read_lines, AocDay};
+
 const SEARCH_STRING: [char; 4] = ['X', 'M', 'A', 'S'];
 
+#[derive(Clone)]
 pub struct AocDay4 {
     matrix: Vec<Vec<char>>,
 }
 
 impl AocDay4 {
-    pub fn new(input: Vec<String>) -> AocDay4 {
+    pub fn new() -> AocDay4 {
+        let input = read_lines("input/day4.txt");
         let matrix = Self::create_matrix(input);
         AocDay4 { matrix }
     }
 
-    pub fn part1(&mut self) -> i32 {
+    pub fn part1(&self) -> i32 {
+        let mut _self = self.clone();
         let mut words = 0;
 
         let directions = [
@@ -29,7 +34,7 @@ impl AocDay4 {
                 if self.matrix[r][c] == SEARCH_STRING[0] {
                     for (dr, dc) in directions.iter() {
                         if Self::search_in_direction(
-                            &mut self.matrix,
+                            &mut _self.matrix,
                             r as isize,
                             c as isize,
                             *dr,
@@ -133,5 +138,15 @@ impl AocDay4 {
                 && matrix[r2 as usize][c2 as usize] == 'M')
                 || (matrix[r1 as usize][c1 as usize] == 'M'
                     && matrix[r2 as usize][c2 as usize] == 'S'))
+    }
+}
+
+impl AocDay for AocDay4 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

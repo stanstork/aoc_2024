@@ -1,5 +1,5 @@
+use crate::{utils, AocDay};
 use std::collections::HashMap;
-use crate::utils;
 
 #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 enum Direction {
@@ -65,21 +65,21 @@ impl AocDay6 {
         map.iter().flatten().filter(|&c| *c == 'X').count() as i32
     }
 
-    pub fn part2(&self) -> i32{
+    pub fn part2(&self) -> i32 {
         let mut map = self.map.clone();
         let (start_x, start_y) = self.get_starting_point();
 
         let mut cycles = 0;
-    
+
         for r in 0..map.len() {
             for c in 0..map[0].len() {
                 if map[r][c] == '.' {
                     map[r][c] = '#';
-    
+
                     if Self::detect_cycle(&map, start_x, start_y) {
                         cycles += 1;
                     }
-    
+
                     map[r][c] = '.';
                 }
             }
@@ -143,5 +143,15 @@ impl AocDay6 {
         }
 
         false
+    }
+}
+
+impl AocDay for AocDay6 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

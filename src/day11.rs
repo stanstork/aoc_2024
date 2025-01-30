@@ -1,4 +1,4 @@
-use crate::utils;
+use crate::{utils, AocDay};
 use std::{collections::HashMap, vec};
 
 pub struct AocDay11 {
@@ -83,5 +83,15 @@ impl AocDay11 {
             .split_whitespace()
             .map(|x| x.parse::<i64>().unwrap())
             .collect::<Vec<i64>>()
+    }
+}
+
+impl AocDay for AocDay11 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

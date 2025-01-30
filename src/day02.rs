@@ -1,3 +1,5 @@
+use crate::{utils::read_lines, AocDay};
+
 pub struct AocDay2 {
     reports: Vec<Vec<i32>>,
 }
@@ -12,7 +14,8 @@ const MIN_DIFF: i32 = 1;
 const MAX_DIFF: i32 = 3;
 
 impl AocDay2 {
-    pub fn new(input: Vec<String>) -> AocDay2 {
+    pub fn new() -> AocDay2 {
+        let input = read_lines("input/day2.txt");
         let reports = Self::parse(&input);
         AocDay2 { reports }
     }
@@ -80,5 +83,15 @@ impl AocDay2 {
                     .collect::<Vec<i32>>()
             })
             .collect()
+    }
+}
+
+impl AocDay for AocDay2 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

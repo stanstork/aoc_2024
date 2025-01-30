@@ -57,3 +57,21 @@ pub fn split_lines_whitespace(file_path: &str) -> (Vec<String>, Vec<String>) {
     }
     (first, second)
 }
+
+pub fn split_multi_lines_whitespace(file_path: &str) -> Vec<Vec<String>> {
+    let lines = read_lines(file_path);
+    let mut current = Vec::new();
+    let mut result = Vec::new();
+    for line in lines {
+        if line.is_empty() {
+            result.push(current);
+            current = Vec::new();
+        } else {
+            current.push(line);
+        }
+    }
+    if !current.is_empty() {
+        result.push(current);
+    }
+    result
+}

@@ -1,27 +1,31 @@
+use crate::{utils::read_lines, AocDay};
+
 const MUL_PATTERN: [char; 3] = ['m', 'u', 'l'];
 const DO_PATTERN: [char; 4] = ['d', 'o', '(', ')'];
 const DONT_PATTERN: [char; 7] = ['d', 'o', 'n', '\'', 't', '(', ')'];
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Clone)]
 pub enum Instruction {
     Do,
     Dont,
 }
 
+#[derive(Clone)]
 pub struct AocDay3 {
     input: Vec<String>,
     instruction: Instruction,
 }
 
 impl AocDay3 {
-    pub fn new(input: Vec<String>) -> AocDay3 {
+    pub fn new() -> AocDay3 {
+        let input = read_lines("input/day3.txt");
         AocDay3 {
             input,
             instruction: Instruction::Do,
         }
     }
 
-    pub fn part1(&mut self) -> i32 {
+    pub fn part1(&self) -> i32 {
         self.input.iter().fold(0, |acc, line| {
             let chars = line.chars().collect::<Vec<_>>();
             acc + chars.iter().enumerate().fold(0, |acc, (i, c)| {
@@ -34,19 +38,20 @@ impl AocDay3 {
         })
     }
 
-    pub fn part2(&mut self) -> i32 {
-        self.input.iter().fold(0, |acc, line| {
+    pub fn part2(&self) -> i32 {
+        let mut _self = self.clone();
+        _self.input.iter().fold(0, |acc, line| {
             let chars = line.chars().collect::<Vec<_>>();
             let mut sum = 0;
             for (j, c) in chars.iter().enumerate() {
                 if *c == 'm' {
-                    if self.instruction == Instruction::Do {
+                    if _self.instruction == Instruction::Do {
                         sum += Self::eval_mul(&chars, j);
                     }
                 }
                 if *c == 'd' {
                     if let Some(instruction) = Self::parse_instruction(&chars, j) {
-                        self.instruction = instruction;
+                        _self.instruction = instruction;
                     }
                 }
             }
@@ -101,5 +106,15 @@ impl AocDay3 {
         } else {
             None
         }
+    }
+}
+
+impl AocDay for AocDay3 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

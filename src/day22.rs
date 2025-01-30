@@ -1,4 +1,4 @@
-use crate::utils::read_lines;
+use crate::{utils::read_lines, AocDay};
 use std::collections::HashMap;
 
 const MODULO: isize = 16777216;
@@ -101,5 +101,15 @@ impl AocDay22 {
             .windows(5)
             .map(|w| ((w[1] - w[0], w[2] - w[1], w[3] - w[2], w[4] - w[3]), w[4]))
             .collect()
+    }
+}
+
+impl AocDay for AocDay22 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

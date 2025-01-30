@@ -1,4 +1,4 @@
-use crate::utils::read_lines;
+use crate::{utils::read_lines, AocDay};
 use std::{
     collections::{HashMap, HashSet},
     vec,
@@ -114,5 +114,15 @@ impl AocDay23 {
             }
         }
         passwords
+    }
+}
+
+impl AocDay for AocDay23 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

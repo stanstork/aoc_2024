@@ -1,6 +1,5 @@
+use crate::{utils, AocDay};
 use std::collections::HashSet;
-
-use crate::utils;
 
 pub struct AocDay10 {
     map: Vec<Vec<i32>>,
@@ -73,5 +72,15 @@ impl AocDay10 {
 
     fn is_within_bounds(&self, r: isize, c: isize) -> bool {
         r >= 0 && (r as usize) < self.map.len() && c >= 0 && (c as usize) < self.map[0].len()
+    }
+}
+
+impl AocDay for AocDay10 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }

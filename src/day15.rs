@@ -1,4 +1,7 @@
-use crate::utils::{in_bounds, read_lines};
+use crate::{
+    utils::{in_bounds, read_lines},
+    AocDay,
+};
 use std::{cell::RefCell, rc::Rc};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -467,4 +470,14 @@ pub fn parse_input() -> (Vec<Vec<char>>, Vec<Direction>) {
         .expect("Invalid directions");
 
     (map, directions)
+}
+
+impl AocDay for AocDay15 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
+    }
 }

@@ -3,6 +3,8 @@ use std::{
     vec,
 };
 
+use crate::AocDay;
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 struct Position(isize, isize);
 
@@ -164,5 +166,15 @@ impl AocDay21 {
     fn extract_num_part(code: &Vec<char>) -> isize {
         let numeric_part: String = code.iter().filter(|c| c.is_numeric()).collect();
         numeric_part.parse().unwrap()
+    }
+}
+
+impl AocDay for AocDay21 {
+    fn part1(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part1())
+    }
+
+    fn part2(&self) -> Box<dyn std::fmt::Display> {
+        Box::new(self.part2())
     }
 }
